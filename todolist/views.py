@@ -4,8 +4,13 @@ from todolist.forms import Todolistform, userprofileform
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from todolist.models import Todolist,Userprofile
+from django.contrib.auth.decorators import login_required
 
 
+def homepage(request):
+    return render(request,'home.html', {})
+
+@login_required(login_url='/user/login/')
 def guest_view(request, pk):
     name = Userprofile.objects.get(id = pk)
     todo = name.todolist_set.all()
@@ -14,6 +19,8 @@ def guest_view(request, pk):
 
     return render(request, 'guest.html', context)
 
+
+@login_required(login_url='/user/login/')
 def create(request):
     if request.method == 'POST':
         form = userprofileform(request.POST)
@@ -32,6 +39,7 @@ def create(request):
         return render(request,'create.html', {'form': form} )
 
 
+@login_required(login_url='/user/login/')
 def create_list(request):
     user = request.user
     form = Todolistform(request.POST)
@@ -44,6 +52,8 @@ def create_list(request):
     context = {'form': form}
     return render(request, 'create_list.html', context) 
 
+
+@login_required(login_url='/user/login/')
 def update_list(request, pk):
     user = request.user
     todo = Todolist.objects.get(id = pk)
@@ -57,6 +67,8 @@ def update_list(request, pk):
     context = {'form': form}
     return render(request, 'update_list.html', context )
 
+    
+@login_required(login_url='/user/login/')
 def delete_list(request, pk):
     user = request.user
     todo = Todolist.objects.get(id = pk)

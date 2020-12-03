@@ -1,11 +1,12 @@
 
 from django.urls import path
-from todolist.views import guest_view, create_list, update_list, delete_list, create
+from todolist.views import homepage,guest_view, create_list, update_list, delete_list, create
 
 
 app_name = 'todolist'
 
 urlpatterns = [
+    path('', homepage, name = 'homepage'),
     path('guest/<str:pk>/', guest_view, name = 'guest_view'),
     path('create_list/', create_list, name = 'create_list'),
     path('create/', create, name = 'create'),
