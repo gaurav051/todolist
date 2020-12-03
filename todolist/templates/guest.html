@@ -1,0 +1,80 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<p> You are logged in as {{request.user }}</p>
+<body style="background-color:rgba(196, 236, 172, 0.712);">
+        <div class = "container">
+
+        
+
+
+            <hr>
+
+           
+        {% for obj in todo %}
+            <div class="row">
+            <div class="col-sm-4" style="background-color:lavender;">
+        
+        
+            
+
+            <div class = "card shadow"  >
+                <div class = "card-reader">
+
+                {% if obj.Date|timesince >= "1 min" %}
+                    <div class="card bg-warning">
+                        <div class="card-body">
+                    
+               
+                    <p><strong>Title: </strong> {{ obj.title}}</p>
+                    <p><strong>Description: </strong> {{ obj.description}}</p>
+                    <p><strong>status: </strong> {{ obj.status}}</p>
+                    <p><strong>Date: </strong> {{ obj.Date}}</p>
+                        </div>
+                    </div>
+
+                {% elif obj.Date|timesince < "1 min" and  obj.priority == 'high' %}
+                    <div class="card bg-success">
+                        <div class="card-body">
+                    
+                        <p><strong>Title: </strong> {{ obj.title}}</p>
+                        <p><strong>Description: </strong> {{ obj.description}}</p>
+                        <p><strong>status: </strong> {{ obj.status}}</p>
+                        <p><strong>Date: </strong> {{ obj.Date}}</p>
+
+                        </div>
+                    </div>
+
+                {% elif obj.Date|timesince < "1 min" and  obj.priority == 'normal' %}
+                    <div class="card bg-light">
+                        <div class="card-body">
+                
+                
+                        <p><strong>Title: </strong> {{ obj.title}}</p>
+                        <p><strong>Description: </strong> {{ obj.description}}</p>
+                    <p><strong>status: </strong> {{ obj.status}}</p>
+                    <p><strong>Date: </strong> {{ obj.Date}}</p>
+                        </div>
+                    </div>
+
+                {% endif %}
+
+                <p><a href = "{% url 'todolist:update_list' obj.id %}">update_list</a></p>
+                <p><a href = "{% url 'todolist:delete_list' obj.id %}">delete_list</a></p>
+
+    
+                
+
+        
+
+    
+    
+    </div> 
+    </div>
+</div>  
+</div>
+
+{% endfor %}
+</div>
+{% endblock %}
